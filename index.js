@@ -45,13 +45,13 @@ client.connect(err => {
      })
     })
 
-    // app.delete('/delete/:id',(req,res)=> {
-    //   const id = ObjectId(req.params.id)
-    //   bookCollection.findOneAndDelete({_id: id})
-    //   .then(document =>{
-    //     res.send(!!document.value)
-    //   })
-    // })
+    app.delete('/delete/:id',(req,res)=> {
+      const id = ObjectId(req.params.id)
+      bookCollection.findOneAndDelete({_id: id})
+      .then(document =>{
+        res.send(!!document.value)
+      })
+    })
 
     app.post('/addOrder', (req,res) => {
      const newOrder = req.body;
