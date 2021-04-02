@@ -19,6 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 client.connect(err => {
     const bookCollection = client.db("book-stall").collection("books");
+    const orderCollection = client.db("book-stall").collection("order");
 
     app.get('/books',(req,res) => {
       bookCollection.find()
@@ -43,7 +44,31 @@ client.connect(err => {
        res.send(result.insertedCount > 0)
      })
     })
+
+    // app.delete('/delete/:id',(req,res)=> {
+    //   const id = ObjectId(req.params.id)
+    //   bookCollection.findOneAndDelete({_id: id})
+    //   .then(document =>{
+    //     res.send(!!document.value)
+    //   })
+    // })
+
+    app.post('/addOrder', (req,res) => {
+     const newOrder = req.body;
+      orderCollection.insertOne(newOrder)
+     .then(result => {
+       console.log('inserted',result.insertedCount );
+       res.send(result.insertedCount > 0)
+     })
+    })
+
+    app.get('/order',(req,res) => {
+      orderCollection.find({})
+      .toArray((err, order) => {
+        res.send(order)
+      })
+    })
     
   });
-
+  
 app.listen(port)
