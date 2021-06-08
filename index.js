@@ -37,21 +37,36 @@ client.connect(err => {
 
     app.post('/addBook', (req,res) => {
      const newBook = req.body;
-     console.log('adding new book', newBook );
      bookCollection.insertOne(newBook)
      .then(result => {
-       console.log('inserted',result.insertedCount );
        res.send(result.insertedCount > 0)
      })
     })
 
     app.delete('/delete/:id',(req,res)=> {
       const id = ObjectId(req.params.id)
-      bookCollection.findOneAndDelete({_id: id})
+      bookCollection.deleteOne({_id: id})
       .then(document =>{
-        res.send(!!document.value)
+        res.send(document.deletedCount>0)
       })
     })
+
+    // app.delete("/delete/:id", (req, res) => {
+    //   bookCollection
+    //     .deleteOne({ _id: ObjectId(req.params.id) })
+    //     .then((result) => {
+    //       console.log(result);
+    //     });
+    // });
+
+    // app.delete("/delete/:id", (req, res) => {
+    //   productsCollection
+    //     .deleteOne({ _id: ObjectId(req.params.id) })
+    //     .then((result) => {
+    //       res.send(result.deletedCount > 0);
+    //       console.log("deleted");
+    //     });
+    // });
 
     app.post('/addOrder', (req,res) => {
      const newOrder = req.body;
