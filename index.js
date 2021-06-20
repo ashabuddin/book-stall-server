@@ -51,23 +51,6 @@ client.connect(err => {
       })
     })
 
-    // app.delete("/delete/:id", (req, res) => {
-    //   bookCollection
-    //     .deleteOne({ _id: ObjectId(req.params.id) })
-    //     .then((result) => {
-    //       console.log(result);
-    //     });
-    // });
-
-    // app.delete("/delete/:id", (req, res) => {
-    //   productsCollection
-    //     .deleteOne({ _id: ObjectId(req.params.id) })
-    //     .then((result) => {
-    //       res.send(result.deletedCount > 0);
-    //       console.log("deleted");
-    //     });
-    // });
-
     app.post('/addOrder', (req,res) => {
      const newOrder = req.body;
       orderCollection.insertOne(newOrder)
